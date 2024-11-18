@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.centered-image {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .centered-image img {
+    width: 100px;
+  }
