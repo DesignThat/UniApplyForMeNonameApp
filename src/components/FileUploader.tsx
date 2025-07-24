@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload } from 'lucide-react';
 
@@ -36,7 +36,6 @@ export function FileUploader({ onFileUpload }: FileUploaderProps) {
       {...getRootProps()}
       className={`w-full p-4 sm:p-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors
         ${isDragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary'}`}
-      aria-label="File Uploader"
     >
       <input {...getInputProps()} />
       <div className="flex flex-col items-center justify-center text-gray-600">

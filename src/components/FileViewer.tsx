@@ -23,6 +23,16 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
       const pageWidth = pdf.internal.pageSize.getWidth();
       const pageHeight = pdf.internal.pageSize.getHeight();
 
+      // Set PDF metadata
+      const fileName = file.name || 'noname';
+      pdf.setProperties({
+        title: `${fileName} - UniApplyForMe UNISA Noname Viewer`,
+        subject: 'UNISA Noname File Conversion',
+        author: 'UniApplyForMe',
+        creator: 'UniApplyForMe UNISA Noname Viewer',
+        producer: 'UniApplyForMe'
+      });
+
       // Create a temporary div for rendering
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;

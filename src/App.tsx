@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FileUploader } from './components/FileUploader';
 import { FileViewer } from './components/FileViewer';
-import { FileWarning } from 'lucide-react';
+import { FileWarning, ExternalLink, Play } from 'lucide-react';
 
 export default function App() {
   const [file, setFile] = useState<File | null>(null);
   const [content, setContent] = useState<string>('');
   const [error, setError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleFileUpload = async (uploadedFile: File) => {
     try {
       setError('');
-      setIsLoading(true);
       const text = await uploadedFile.text();
-
+      
       if (!text.trim().toLowerCase().includes('<!doctype html') && 
           !text.trim().toLowerCase().includes('<html')) {
         throw new Error('The file does not appear to be a valid HTML file.');
       }
-
+      
       setFile(uploadedFile);
       setContent(text);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to read the file. Please try again.');
       console.error(err);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -43,6 +39,7 @@ export default function App() {
             <img 
               src="https://assets.apply.org.za/20241113200019/UniApplyForMe-H.png" 
               alt="UniApplyForMe" 
+              className="h-[50px] w-auto mx-auto"
             />
           </a>
         </div>
@@ -63,17 +60,7 @@ export default function App() {
           </div>
         )}
 
-        {isLoading && (
-          <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-center text-blue-700 text-sm sm:text-base">
-            <svg className="animate-spin h-5 w-5 mr-3 text-blue-500" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg>
-            Loading...
-          </div>
-        )}
-
-        {!file && !isLoading && <FileUploader onFileUpload={handleFileUpload} />}
+        {!file && <FileUploader onFileUpload={handleFileUpload} />}
 
         {file && content && (
           <FileViewer
@@ -82,7 +69,61 @@ export default function App() {
             onClose={handleClose}
           />
         )}
+
+        {/* Help Resources Section */}
+        <div className="mt-6 sm:mt-8 bg-white rounded-lg shadow-sm p-4 sm:p-6 border border-gray-100">
+          <h2 className="text-lg sm:text-xl font-semibold text-secondary mb-3 sm:mb-4">Need Help?</h2>
+          <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
+            <a
+              href="https://apply.org.za/guides/how-to-open-the-unisa-noname-file/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center p-3 sm:p-4 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors group"
+            >
+              <ExternalLink className="w-5 h-5 text-primary mr-3 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-secondary group-hover:text-primary text-sm sm:text-base">
+                  Step-by-Step Guide
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600">
+                  Learn how to open UNISA noname files
+                </p>
+              </div>
+            </a>
+            <a
+              href="https://www.youtube.com/watch?v=wv49Z7X6PzA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center p-3 sm:p-4 bg-red-50 hover:bg-red-100 rounded-lg transition-colors group"
+            >
+              <Play className="w-5 h-5 text-red-600 mr-3 flex-shrink-0" />
+              <div>
+                <h3 className="font-medium text-secondary group-hover:text-red-600 text-sm sm:text-base">
+                  Video Tutorial
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600">
+                  Watch how to use this tool
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
+
+      {/* Footer with additional info */}
+      <footer className="mt-8 sm:mt-12 text-center text-xs sm:text-sm text-gray-500">
+        <div className="max-w-4xl mx-auto px-4">
+          <p className="mb-2">
+            This tool helps you view and convert UNISA noname files (extensionless files) to PDF format for easy reading and sharing.
+          </p>
+          <p>
+            For more university application assistance, visit{' '}
+            <a href="https://apply.org.za" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-secondary">
+              UniApplyForMe
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 }
