@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://assets.apply.org.za/20240302022326/cropped-logo-6.png" />
+    <link rel="apple-touch-icon" href="https://assets.apply.org.za/20240302022326/cropped-logo-6.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#16a637" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="UNISA Viewer" />
+    <title>UNISA noname File Viewer - View & Convert UNISA Files to PDF | UniApplyForMe</title>
+    <meta name="description" content="Free online tool to view and convert UNISA noname files to PDF. Upload your extensionless UNISA files and preview them instantly. Powered by UniApplyForMe - your trusted university application partner." />
+    <meta name="keywords" content="UNISA, noname file, file viewer, PDF converter, university applications, UniApplyForMe, South Africa" />
+    <meta name="author" content="UniApplyForMe" />
+    <meta property="og:title" content="UNISA noname File Viewer - Convert Files to PDF" />
+    <meta property="og:description" content="Free tool to view and convert UNISA noname files to PDF. Upload your files and preview them instantly." />
+    <meta property="og:url" content="https://unisa-viewer.apply.org.za" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="UNISA noname File Viewer" />
+    <meta name="twitter:description" content="Free tool to view and convert UNISA noname files to PDF" />
+    <link rel="canonical" href="https://unisa-viewer.apply.org.za" />
+    <script type="module" crossorigin src="/assets/index-C-6mpOZz.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CDex45tL.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Register service worker for PWA installation
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registered successfully:', reg))
+            .catch(err => console.log('Service Worker registration failed:', err));
+        });
+      }
+    </script>
+  </body>
+</html>
