@@ -1,3 +1,45 @@
+@import 'react-toastify/dist/ReactToastify.css';
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+.Toastify__toast-container {
+  width: min(92vw, 360px);
+}
+
+.app-toast {
+  border: 1px solid rgba(22, 166, 55, 0.2);
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f2937;
+  box-shadow: 0 12px 30px rgba(9, 94, 65, 0.12);
+}
+
+.app-toast-body {
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 2px 0;
+}
+
+.app-toast-progress {
+  background: #16a637 !important;
+}
+
+.Toastify__toast-icon svg {
+  fill: #16a637;
+}
+
+.Toastify__close-button {
+  color: #095e41;
+  opacity: 0.8;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,0 +1,60 @@
+{
+  "name": "UNISA noname File Viewer",
+  "short_name": "UNISA Viewer",
+  "description": "Free online tool to view and convert UNISA noname files to PDF. Upload your extensionless UNISA files and preview them instantly.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#16a637",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Upload File",
+      "short_name": "Upload",
+      "description": "Quickly upload a UNISA file",
+      "url": "/?action=upload",
+      "icons": [
+        {
+          "src": "https://assets.apply.org.za/20240302022326/cropped-logo-6.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
