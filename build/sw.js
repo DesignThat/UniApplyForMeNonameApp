@@ -1,4 +1,4 @@
-const CACHE_NAME = 'unisa-viewer-v2';
+const CACHE_NAME = 'unisa-viewer-v3';
 const urlsToCache = [
   '/',
   '/vite.svg'
@@ -51,6 +51,10 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(event.request)
         .then(response => {
+          if (response && response.status === 404) {
+            return caches.match('/').then(cachedHome => cachedHome || fetch('/'));
+          }
+
           if (response && response.status === 200) {
             const responseToCache = response.clone();
             caches.open(CACHE_NAME).then(cache => {
