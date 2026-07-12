@@ -3,7 +3,7 @@
 # (For Cloudflare Pages, connect the repo in the dashboard; no config needed.)
 # ─────────────────────────────────────────────────────────────────────────────
 
-name = "unisa-noname-viewer"
+name = "uafm-noname"
 main = "worker/index.js"
 compatibility_date = "2024-01-01"
 
