@@ -9,7 +9,7 @@ export function AppBanner() {
         <Smartphone className="w-5 h-5 flex-shrink-0 opacity-90" />
 
         <p className="flex-1 text-sm leading-snug">
-          <span className="font-semibold">Get the free UniApplyForMe app.</span>
+          <span className="font-semibold">Get the free UniApplyForMe app — no ads.</span>
           {' '}View files, calculate your APS score, match qualifications, and keep all your documents saved permanently.
           {' '}Available on{' '}
           <a
