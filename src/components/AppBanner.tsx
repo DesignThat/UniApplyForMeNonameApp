@@ -8,19 +8,21 @@ export function AppBanner() {
       <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
         <Smartphone className="w-5 h-5 flex-shrink-0 opacity-90" />
 
-        <p className="flex-1 text-sm leading-snug">
-          <span className="font-semibold">Get the free UniApplyForMe app — no ads.</span>
-          {' '}View files, calculate your APS score, match qualifications, and keep all your documents saved permanently.
-          {' '}Available on{' '}
-          <a
-            href={APP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline underline-offset-2 font-semibold hover:opacity-80 transition-opacity"
-          >
-            iOS, Android and Huawei
-          </a>.
-        </p>
+        <div className="flex-1 text-sm leading-snug">
+          <p className="font-semibold">Get the free UniApplyForMe app — no ads.</p>
+          <p className="opacity-90">
+            View files, calculate your APS score, match qualifications, and keep all your documents saved permanently.
+            {' '}Available on{' '}
+            <a
+              href={APP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 font-semibold hover:opacity-80 transition-opacity"
+            >
+              iOS, Android and Huawei
+            </a>.
+          </p>
+        </div>
 
         <a
           href={APP_URL}
