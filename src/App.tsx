@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FileUploader } from './components/FileUploader';
 import { FileViewer } from './components/FileViewer';
 import { ExternalLink, Play, ShieldCheck } from 'lucide-react';
+import { AppBanner } from './components/AppBanner';
 
 export default function App() {
   const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
@@ -57,6 +58,8 @@ export default function App() {
           </a>
         </div>
       </header>
+
+      <AppBanner />
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-10 sm:py-14">
 

@@ -30,8 +30,18 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
     return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:system-ui,sans-serif;line-height:1.6;padding:16px;color:#111}</style></head><body>${content}</body></html>`;
   }, [content]);
 
+  const downloadTxt = () => {
+    const blob = new Blob([plainText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${file.name || 'document'}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('Text file downloaded.');
+  };
+
   const convertToPDF = async () => {
-    if (!contentRef.current) return;
     setIsGenerating(true);
     let tempDiv: HTMLDivElement | null = null;
     try {
@@ -88,6 +98,14 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
     }
   };
 
+  const handleDownload = () => {
+    if (viewMode === 'text') {
+      downloadTxt();
+    } else {
+      convertToPDF();
+    }
+  };
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(plainText);
@@ -103,7 +121,7 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
       <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as 'rendered' | 'text')}>
 
-        {/* ── Toolbar ── */}
+        {/* Toolbar */}
         <div className="border-b border-gray-200 px-4 py-3">
           {/* Row 1: file info + close */}
           <div className="flex items-center justify-between gap-3 mb-3">
@@ -122,31 +140,37 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
             </button>
           </div>
 
-          {/* Row 2: tabs + actions */}
+          {/* Row 2: tabs + download */}
           <div className="flex items-center gap-2 flex-wrap">
-            <TabsList className="bg-gray-100 rounded-lg p-0.5 h-auto">
-              <TabsTrigger value="rendered" className="rounded-md px-3 py-1.5 text-xs font-medium gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+            <TabsList className="bg-gray-100 rounded-lg p-0.5 h-auto gap-0.5">
+              <TabsTrigger
+                value="rendered"
+                className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors text-gray-500 hover:text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm"
+              >
                 <Eye className="w-3.5 h-3.5" />
                 Document
               </TabsTrigger>
-              <TabsTrigger value="text" className="rounded-md px-3 py-1.5 text-xs font-medium gap-1.5 data-[state=active]:bg-white data-[state=active]:shadow-sm">
+              <TabsTrigger
+                value="text"
+                className="inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors text-gray-500 hover:text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm"
+              >
                 <Type className="w-3.5 h-3.5" />
                 Plain text
               </TabsTrigger>
             </TabsList>
 
             <button
-              onClick={convertToPDF}
+              onClick={handleDownload}
               disabled={isGenerating}
               className="ml-auto flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1"
             >
               <Download className="w-3.5 h-3.5" />
-              {isGenerating ? 'Preparing…' : 'Download PDF'}
+              {isGenerating ? 'Preparing...' : viewMode === 'text' ? 'Download TXT' : 'Download PDF'}
             </button>
           </div>
         </div>
 
-        {/* ── Content ── */}
+        {/* Content */}
         <TabsContent value="rendered" className="m-0">
           <div ref={contentRef}>
             <iframe
@@ -184,10 +208,10 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
           </div>
         </TabsContent>
 
-        {/* ── Hint ── */}
+        {/* Hint */}
         <div className="border-t border-gray-100 px-4 py-2.5 flex items-center gap-2 text-xs text-gray-400 bg-gray-50">
           <Lightbulb className="w-3.5 h-3.5 flex-shrink-0 text-amber-400" />
-          Switch to Plain text to copy content, or download a PDF to keep a clean copy.
+          Switch to Plain text to copy or download as TXT, or stay on Document to save as PDF.
         </div>
       </Tabs>
     </div>

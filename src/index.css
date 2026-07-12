@@ -10,30 +10,57 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Toast ── */
+/* ── Toast container ── */
 .Toastify__toast-container {
-  width: min(92vw, 360px);
+  width: min(92vw, 380px);
+  padding: 0;
 }
 
+/* ── Base toast ── */
 .app-toast {
-  border-radius: 10px;
-  background: #fff;
-  color: #111827;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
-  border: 1px solid #e5e7eb;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.07) !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  font-size: 0.875rem;
 }
 
 .app-toast-body {
-  font-size: 0.875rem;
   font-weight: 500;
+  line-height: 1.45;
+  padding: 0 4px 0 2px;
 }
 
+/* ── Progress bar ── */
 .app-toast-progress {
+  height: 3px !important;
+  border-radius: 0 0 14px 14px;
+}
+
+/* Success */
+.Toastify__toast--success .app-toast-progress {
   background: #16a637 !important;
 }
+.Toastify__toast--success .Toastify__toast-icon svg {
+  fill: #16a637;
+}
 
-.Toastify__toast-icon svg { fill: #16a637; }
-.Toastify__close-button { color: #6b7280; }
+/* Error */
+.Toastify__toast--error .app-toast-progress {
+  background: #ef4444 !important;
+}
+
+/* Close button */
+.Toastify__close-button {
+  color: #9ca3af;
+  opacity: 1;
+  align-self: center;
+}
+.Toastify__close-button:hover {
+  color: #374151;
+}
 
 @tailwind base;
 @tailwind components;
