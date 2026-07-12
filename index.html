@@ -2,38 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://assets.apply.org.za/20240302022326/cropped-logo-6.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Primary meta -->
+    <title>UNISA Noname File Viewer — Open & Read Your UNISA File | UniApplyForMe</title>
+    <meta name="description" content="Can't open your UNISA noname file? Upload it here and read it instantly — no app needed. Copy the text or download a clean PDF. Free, private, and works on any device." />
+    <meta name="keywords" content="UNISA noname file, open UNISA file, UNISA file viewer, UNISA noname PDF, UNISA attachment, South Africa university" />
+    <meta name="author" content="UniApplyForMe" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://unisa-viewer.apply.org.za" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://unisa-viewer.apply.org.za" />
+    <meta property="og:title" content="UNISA Noname File Viewer — Open & Read Your UNISA File" />
+    <meta property="og:description" content="Upload your UNISA noname file and read it instantly. Copy the text or save it as a PDF — free and private." />
+    <meta property="og:image" content="https://assets.apply.org.za/20241113200019/UniApplyForMe-H.png" />
+    <meta property="og:site_name" content="UniApplyForMe" />
+    <meta property="og:locale" content="en_ZA" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="UNISA Noname File Viewer — Open & Read Your UNISA File" />
+    <meta name="twitter:description" content="Upload your UNISA noname file and read it instantly. Free, private, works on any device." />
+    <meta name="twitter:image" content="https://assets.apply.org.za/20241113200019/UniApplyForMe-H.png" />
+
+    <!-- PWA / icons -->
+    <link rel="icon" type="image/png" href="https://assets.apply.org.za/20240302022326/cropped-logo-6.png" />
     <link rel="apple-touch-icon" href="https://assets.apply.org.za/20240302022326/cropped-logo-6.png" />
     <link rel="manifest" href="/manifest.json" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#16a637" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="UNISA Viewer" />
-    <title>UNISA noname File Viewer - View & Convert UNISA Files to PDF | UniApplyForMe</title>
-    <meta name="description" content="Free online tool to view and convert UNISA noname files to PDF. Upload your extensionless UNISA files and preview them instantly. Powered by UniApplyForMe - your trusted university application partner." />
-    <meta name="keywords" content="UNISA, noname file, file viewer, PDF converter, university applications, UniApplyForMe, South Africa" />
-    <meta name="author" content="UniApplyForMe" />
-    <meta property="og:title" content="UNISA noname File Viewer - Convert Files to PDF" />
-    <meta property="og:description" content="Free tool to view and convert UNISA noname files to PDF. Upload your files and preview them instantly." />
-    <meta property="og:url" content="https://unisa-viewer.apply.org.za" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="UNISA noname File Viewer" />
-    <meta name="twitter:description" content="Free tool to view and convert UNISA noname files to PDF" />
-    <link rel="canonical" href="https://unisa-viewer.apply.org.za" />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "UNISA Noname File Viewer",
+      "url": "https://unisa-viewer.apply.org.za",
+      "description": "Free online tool to open, read, and convert UNISA noname files. Upload your extensionless UNISA attachment and view it instantly.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "ZAR" },
+      "provider": {
+        "@type": "Organization",
+        "name": "UniApplyForMe",
+        "url": "https://apply.org.za"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Register service worker for PWA installation
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('Service Worker registered successfully:', reg))
-            .catch(err => console.log('Service Worker registration failed:', err));
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
         });
       }
     </script>

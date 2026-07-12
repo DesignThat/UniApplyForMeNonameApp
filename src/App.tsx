@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { FileUploader } from './components/FileUploader';
 import { FileViewer } from './components/FileViewer';
-import { ExternalLink, Play, Lock, Mail, Upload, FileCheck2, Sparkles } from 'lucide-react';
+import { ExternalLink, Play, ShieldCheck } from 'lucide-react';
 
 export default function App() {
   const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024;
@@ -12,23 +12,20 @@ export default function App() {
   const handleFileUpload = async (uploadedFile: File) => {
     try {
       if (uploadedFile.size > MAX_FILE_SIZE_BYTES) {
-        toast.error('File is too large. Please upload a file smaller than 2MB.');
+        toast.error('File too large — maximum size is 2 MB.');
         return;
       }
-
       const text = await uploadedFile.text();
-      const normalizedSnippet = text.trim().toLowerCase().slice(0, 2000);
-
-      if (!normalizedSnippet.includes('<!doctype') && !normalizedSnippet.includes('<')) {
-        toast.error('The file does not appear to be valid.');
+      const snippet = text.trim().toLowerCase().slice(0, 2000);
+      if (!snippet.includes('<!doctype') && !snippet.includes('<')) {
+        toast.error('This file does not look like a valid UNISA noname file.');
         return;
       }
-
       setFile(uploadedFile);
       setContent(text);
       toast.success(`Loaded ${uploadedFile.name}`);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Failed to read the file. Please try again.');
+      toast.error(err instanceof Error ? err.message : 'Could not read the file. Please try again.');
     }
   };
 
@@ -37,148 +34,113 @@ export default function App() {
     setContent('');
   };
 
-  const steps = [
-    {
-      icon: <Mail className="h-5 w-5 text-primary" />,
-      label: 'Download',
-      desc: 'Save the noname file from your UNISA email.',
-    },
-    {
-      icon: <Upload className="h-5 w-5 text-primary" />,
-      label: 'Upload',
-      desc: 'Select or drag the file onto this page.',
-    },
-    {
-      icon: <FileCheck2 className="h-5 w-5 text-primary" />,
-      label: 'Read & Copy',
-      desc: 'View the content and copy what you need.',
-    },
-  ];
-
   return (
-    <div className="min-h-screen hero-gradient">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+
       {/* ── Header ── */}
-      <header className="sticky top-0 z-30 border-b border-white/60 bg-white/70 backdrop-blur-md">
-        <div className="max-w-4xl mx-auto flex items-center justify-between px-4 py-3">
-          <a href="https://apply.org.za" target="_blank" rel="noopener noreferrer">
+      <header className="bg-white border-b border-gray-200">
+        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+          <a href="https://apply.org.za" target="_blank" rel="noopener noreferrer" aria-label="UniApplyForMe homepage">
             <img
               src="https://assets.apply.org.za/20241113200019/UniApplyForMe-H.png"
               alt="UniApplyForMe"
-              className="h-9 w-auto transition-transform hover:scale-105"
+              className="h-8 w-auto"
             />
           </a>
-          <span className="text-xs font-medium text-gray-500 hidden sm:block">
-            UNISA Noname File Viewer
-          </span>
+          <a
+            href="https://apply.org.za/university/unisa/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-gray-500 hover:text-primary transition-colors"
+          >
+            About UNISA
+          </a>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-10 sm:py-14">
+      <main className="flex-1 max-w-3xl mx-auto w-full px-4 py-10 sm:py-14">
+
         {/* ── Hero ── */}
-        <div className="text-center mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold text-primary mb-5 border border-primary/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            Free · Private · No sign-up
-          </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-secondary leading-tight mb-4">
-            Open Your UNISA<br className="hidden sm:block" /> Noname File
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-3 leading-tight">
+            Open Your UNISA Noname File
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto">
-            Upload the mysterious attachment from your{' '}
-            <a href="https://apply.org.za/university/unisa/" className="text-primary font-semibold hover:underline">
-              UNISA
-            </a>{' '}
-            email and instantly read, copy, or download it as a PDF.
+          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">
+            Upload the attachment from your UNISA email — read it, copy the text, or save it as a PDF.
           </p>
         </div>
 
-        {/* ── Steps ── */}
+        {/* ── Upload / Viewer ── */}
+        {!file
+          ? <FileUploader onFileUpload={handleFileUpload} />
+          : <FileViewer file={file} content={content} onClose={handleClose} />
+        }
+
+        {/* ── How it works (only before upload) ── */}
         {!file && (
-          <div className="grid sm:grid-cols-3 gap-3 sm:gap-4 mb-8">
-            {steps.map((step, i) => (
-              <div
-                key={i}
-                className="flex flex-col gap-3 rounded-2xl border border-white/80 bg-white/70 backdrop-blur p-5 shadow-sm"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="step-badge inline-flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold text-white shadow-sm">
-                    {i + 1}
-                  </span>
-                  <span className="font-semibold text-secondary text-sm">{step.label}</span>
-                  {step.icon}
-                </div>
-                <p className="text-sm text-gray-600 leading-relaxed">{step.desc}</p>
-              </div>
+          <ol className="mt-8 grid sm:grid-cols-3 gap-4" aria-label="How to use this tool">
+            {[
+              { n: '1', text: 'Download the noname file from your UNISA email.' },
+              { n: '2', text: 'Upload or drag it onto the area above.' },
+              { n: '3', text: 'Read the content, copy text, or download a PDF.' },
+            ].map(({ n, text }) => (
+              <li key={n} className="flex items-start gap-3 bg-white border border-gray-200 rounded-xl p-4">
+                <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                  {n}
+                </span>
+                <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+              </li>
             ))}
-          </div>
-        )}
-
-        {/* ── File uploader / viewer ── */}
-        {!file && <FileUploader onFileUpload={handleFileUpload} />}
-
-        {file && content && (
-          <FileViewer file={file} content={content} onClose={handleClose} />
+          </ol>
         )}
 
         {/* ── Privacy notice ── */}
-        <div className="mt-5 flex items-center gap-2.5 text-xs sm:text-sm text-gray-600 bg-white/60 backdrop-blur rounded-xl px-4 py-3 border border-white/70 shadow-sm">
-          <Lock className="w-4 h-4 flex-shrink-0 text-gray-400" />
-          <span>Your file is processed entirely on your device and never uploaded anywhere.</span>
-        </div>
+        <p className="mt-6 flex items-center justify-center gap-2 text-xs text-gray-400">
+          <ShieldCheck className="w-4 h-4 flex-shrink-0 text-gray-400" />
+          Your file is processed entirely on your device and never uploaded to any server.
+        </p>
 
         {/* ── Help resources ── */}
-        <div className="mt-6 sm:mt-8 rounded-2xl border border-white/80 bg-white/70 backdrop-blur shadow-sm overflow-hidden">
-          <div className="px-5 pt-5 pb-3 border-b border-gray-100">
-            <h2 className="font-bold text-secondary text-base">Need Help?</h2>
-            <p className="text-xs text-gray-500 mt-0.5">Guides and video tutorials</p>
+        {!file && (
+          <div className="mt-10 border-t border-gray-200 pt-8">
+            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Need help?</h2>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <a
+                href="https://apply.org.za/guides/how-to-open-the-unisa-noname-file/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:border-primary/40 hover:bg-primary/5 transition-all group"
+              >
+                <ExternalLink className="w-4 h-4 text-primary flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-gray-800 group-hover:text-primary transition-colors">Step-by-Step Guide</p>
+                  <p className="text-xs text-gray-500">Written walkthrough</p>
+                </div>
+              </a>
+              <a
+                href="https://www.youtube.com/watch?v=wv49Z7X6PzA"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white border border-gray-200 rounded-xl px-4 py-3 hover:border-red-300 hover:bg-red-50 transition-all group"
+              >
+                <Play className="w-4 h-4 text-red-500 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-gray-800 group-hover:text-red-600 transition-colors">Video Tutorial</p>
+                  <p className="text-xs text-gray-500">Watch on YouTube</p>
+                </div>
+              </a>
+            </div>
           </div>
-          <div className="grid sm:grid-cols-2 gap-3 p-4">
-            <a
-              href="https://apply.org.za/guides/how-to-open-the-unisa-noname-file/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-xl bg-primary/5 hover:bg-primary/10 border border-primary/10 p-4 transition-all hover:shadow-md"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                <ExternalLink className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-semibold text-secondary text-sm group-hover:text-primary transition-colors">
-                  Step-by-Step Guide
-                </p>
-                <p className="text-xs text-gray-500 mt-0.5">Learn how to open UNISA noname files</p>
-              </div>
-            </a>
-            <a
-              href="https://www.youtube.com/watch?v=wv49Z7X6PzA"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-xl bg-red-50 hover:bg-red-100 border border-red-100 p-4 transition-all hover:shadow-md"
-            >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100 text-red-600 flex-shrink-0 group-hover:bg-red-200 transition-colors">
-                <Play className="w-4 h-4" />
-              </div>
-              <div>
-                <p className="font-semibold text-secondary text-sm group-hover:text-red-600 transition-colors">
-                  Video Tutorial
-                </p>
-                <p className="text-xs text-gray-500 mt-0.5">Watch how to use this tool</p>
-              </div>
-            </a>
-          </div>
-        </div>
+        )}
       </main>
 
       {/* ── Footer ── */}
-      <footer className="border-t border-gray-200/60 bg-white/50 backdrop-blur mt-4">
-        <div className="max-w-4xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
-          <p>Helping South African students open UNISA files since 2024.</p>
-          <p>
-            More help at{' '}
-            <a href="https://apply.org.za" target="_blank" rel="noopener noreferrer" className="text-primary font-semibold hover:underline">
-              UniApplyForMe
-            </a>
-          </p>
+      <footer className="border-t border-gray-200 bg-white">
+        <div className="max-w-3xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
+          <p>© {new Date().getFullYear()} UniApplyForMe. Helping South African students since 2024.</p>
+          <a href="https://apply.org.za" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+            apply.org.za
+          </a>
         </div>
       </footer>
 
