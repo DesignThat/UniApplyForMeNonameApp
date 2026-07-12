@@ -12,7 +12,7 @@ export default function App() {
   const handleFileUpload = async (uploadedFile: File) => {
     try {
       if (uploadedFile.size > MAX_FILE_SIZE_BYTES) {
-        toast.error('File too large — maximum size is 2 MB.');
+        toast.error('File too large. Maximum size is 2 MB.');
         return;
       }
       const text = await uploadedFile.text();
@@ -66,7 +66,7 @@ export default function App() {
             Open Your UNISA Noname File
           </h1>
           <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto">
-            Upload the attachment from your UNISA email — read it, copy the text, or save it as a PDF.
+            Upload the attachment from your UNISA email. Read it, copy the text, or save it as a PDF.
           </p>
         </div>
 

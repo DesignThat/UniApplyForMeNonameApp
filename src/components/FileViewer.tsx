@@ -43,7 +43,7 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
       const ch = ph - m * 2 - 10;
 
       pdf.setProperties({
-        title: `${file.name} — UNISA Noname Viewer`,
+        title: `${file.name} - UNISA Noname Viewer`,
         author: 'UniApplyForMe',
         creator: 'UniApplyForMe',
       });
@@ -95,7 +95,7 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
       toast.success('Copied to clipboard.');
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error('Copy failed — please select and copy manually.');
+      toast.error('Copy failed. Please select and copy manually.');
     }
   };
 
@@ -162,7 +162,7 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
         <TabsContent value="text" className="m-0">
           <div className="p-4">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs text-gray-400">Plain-text extraction — select all or use the copy button</p>
+              <p className="text-xs text-gray-400">Plain-text extraction. Select all or use the copy button.</p>
               <button
                 onClick={handleCopy}
                 className={[
