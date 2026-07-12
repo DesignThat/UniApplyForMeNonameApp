@@ -45,6 +45,8 @@ export default function App() {
             <img
               src="https://assets.apply.org.za/20241113200019/UniApplyForMe-H.png"
               alt="UniApplyForMe"
+              width="160"
+              height="32"
               className="h-8 w-auto"
             />
           </a>
