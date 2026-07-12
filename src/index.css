@@ -5,26 +5,32 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Toast customisation ── */
 .Toastify__toast-container {
   width: min(92vw, 360px);
 }
 
 .app-toast {
-  border: 1px solid rgba(22, 166, 55, 0.2);
-  border-radius: 12px;
+  border: 1px solid rgba(22, 166, 55, 0.18);
+  border-radius: 14px;
   background: #ffffff;
   color: #1f2937;
-  box-shadow: 0 12px 30px rgba(9, 94, 65, 0.12);
+  box-shadow: 0 16px 40px rgba(9, 94, 65, 0.14), 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .app-toast-body {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 500;
   padding: 2px 0;
 }
 
 .app-toast-progress {
-  background: #16a637 !important;
+  background: linear-gradient(90deg, #16a637, #095e41) !important;
 }
 
 .Toastify__toast-icon svg {
@@ -33,11 +39,49 @@ html {
 
 .Toastify__close-button {
   color: #095e41;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .Toastify__close-button:hover {
   opacity: 1;
+}
+
+/* ── Glassy card utility ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ── Animated gradient hero bg ── */
+.hero-gradient {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 40%, #ecfdf5 70%, #f0fdf4 100%);
+}
+
+/* ── Step number badge ── */
+.step-badge {
+  background: linear-gradient(135deg, #16a637 0%, #095e41 100%);
+}
+
+/* ── Upload zone pulse ring ── */
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.4; }
+  50%  { transform: scale(1.08); opacity: 0.15; }
+  100% { transform: scale(1);   opacity: 0.4; }
+}
+
+.drop-active-ring {
+  animation: pulse-ring 1.4s ease-in-out infinite;
+}
+
+/* ── Smooth iframe fade-in ── */
+iframe {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @tailwind base;
