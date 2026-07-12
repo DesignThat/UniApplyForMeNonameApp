@@ -25,9 +25,15 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
     }
   }, [content]);
 
+  // Replace the external UNISA logo with the locally-served copy so it
+  // renders correctly in both the sandboxed iframe and html2canvas.
+  const withLocalLogo = (html: string) =>
+    html.replace(/https?:\/\/[^"'\s]*UnisaRGB_hires\.jpg/gi, '/UnisaRGB_hires.jpg');
+
   const previewDocument = useMemo(() => {
-    if (/<html[\s>]/i.test(content)) return content;
-    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:system-ui,sans-serif;line-height:1.6;padding:16px;color:#111}</style></head><body>${content}</body></html>`;
+    const processed = withLocalLogo(content);
+    if (/<html[\s>]/i.test(processed)) return processed;
+    return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font-family:system-ui,sans-serif;line-height:1.6;padding:16px;color:#111}</style></head><body>${processed}</body></html>`;
   }, [content]);
 
   const downloadTxt = () => {
@@ -59,7 +65,7 @@ export function FileViewer({ file, content, onClose }: FileViewerProps) {
       });
 
       tempDiv = document.createElement('div');
-      tempDiv.innerHTML = content;
+      tempDiv.innerHTML = withLocalLogo(content);
       tempDiv.style.cssText = 'width:800px;padding:20px;font-family:system-ui,sans-serif;';
       document.body.appendChild(tempDiv);
 
